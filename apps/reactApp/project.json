@@ -1,0 +1,43 @@
+{
+  "name": "reactApp",
+  "projectType": "application",
+  "sourceRoot": "apps/reactApp/src",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/reactApp",
+        "index": "apps/reactApp/src/index.html",
+        "main": "apps/reactApp/src/main.ts",
+        "tsConfig": "apps/reactApp/tsconfig.app.json",
+        "webpackConfig": "apps/reactApp/webpack.config.ts",
+        "assets": [
+          "apps/reactApp/src/favicon.ico",
+          "apps/reactApp/src/assets",
+          {
+            "glob": "**/*",
+            "input": "libs/shared/assets/src/assets",
+            "output": "assets/shared"
+          }
+        ]
+      }
+    },
+    "serve": {
+      "executor": "@nx/react:module-federation-dev-server",
+      "options": {
+        "buildTarget": "reactApp:build",
+        "port": 4202
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "reactApp:build",
+        "port": 4202,
+        "staticFilePath": "dist/apps/reactApp",
+        "spa": true
+      }
+    }
+  }
+}

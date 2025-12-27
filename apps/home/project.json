@@ -1,0 +1,38 @@
+{
+  "name": "home",
+  "projectType": "application",
+  "sourceRoot": "apps/home/src",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "options": {
+        "compiler": "tsc",
+        "outputPath": "dist/apps/home",
+        "index": "apps/home/src/index.html",
+        "main": "apps/home/src/main.ts",
+        "tsConfig": "apps/home/tsconfig.app.json",
+        "webpackConfig": "apps/home/webpack.config.js",
+        "assets": [
+          "apps/home/src/favicon.ico",
+          "apps/home/src/assets",
+          {
+            "glob": "**/*",
+            "input": "libs/shared/assets/src/assets",
+            "output": "assets/shared"
+          }
+        ]
+      },
+      "configurations": {
+        "development": { "optimization": false, "sourceMap": true },
+        "production": { "optimization": true, "outputHashing": "all" }
+      }
+    },
+    "serve": {
+      "executor": "@nx/react:module-federation-dev-server",
+      "options": {
+        "buildTarget": "home:build",
+        "port": 4200
+      }
+    }
+  }
+}
