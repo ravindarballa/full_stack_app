@@ -1,10 +1,10 @@
-import { init } from '@module-federation/enhanced/runtime';
+import { createInstance } from '@module-federation/enhanced/runtime';
 
 // Initialize the federation runtime with your remote applications
-init({
+createInstance({
   name: 'home',
   remotes: [
-    {
+ {
       name: 'angularApp',
       entry: 'http://localhost:4201/remoteEntry.mjs',
     },
